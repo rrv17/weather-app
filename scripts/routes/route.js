@@ -41,7 +41,9 @@ function getCityDetails(city, respond) {
 
         response.on('end', function() {
 
-            if (response.statusCode === 200) {
+            console.log(response.statusCode);
+
+            if (response.statusCode === 200 || response.statusCode === 304 ) {
                 try {
                     //Parse the data
                     var weatherAPIResponse = JSON.parse(body);
@@ -69,6 +71,8 @@ function getForecastDetailsWithCity(requestDetails, respond) {
 
     var weatherAPIResponse = "";
 
+    console.log('requestDetails',requestDetails);
+
     var request = http.get('http://api.openweathermap.org/data/2.5/forecast/daily?q=' + requestDetails.location + '&units=' + requestDetails.units + '&APPID=' + requestDetails.apiKey, function(response) {
 
         var body = "";
@@ -79,13 +83,16 @@ function getForecastDetailsWithCity(requestDetails, respond) {
 
         response.on('end', function() {
 
-            if (response.statusCode === 200) {
+           
+            console.log(response.statusCode);
+
+            if (response.statusCode === 200 || response.statusCode === 304 ) {
                 try {
                     //Parse the data
                     var weatherAPIResponse = JSON.parse(body);
 
                     //Print the data
-                    console.log(weatherAPIResponse);
+                    //console.log(weatherAPIResponse);
                     respond.send(weatherAPIResponse);
                 } catch (error) {
                     //Parse error
